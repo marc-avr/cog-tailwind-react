@@ -139,9 +139,21 @@ const ForgotPassword = () => {
                                 onChange={(event) => setNewPassword(event.target.value)}
                             />
 
-                            <button type="submit" className="bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-blue-600">
-                                Reset
-                            </button>
+                            <div className="flex space-x-4">
+                                <button
+                                    type="submit"
+                                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+                                >
+                                    Verify
+                                </button>
+                                <button
+                                    type='button'
+                                    onClick={(event) => handleForgotPassword(event, email)}
+                                    className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
+                                >
+                                    Resend confirmation code
+                                </button>
+                            </div>
                         </form>
                         <hr className="my-4" />
                         <p>
