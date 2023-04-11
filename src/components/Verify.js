@@ -21,8 +21,6 @@ const Verify = () => {
     try {
       await verify(username, verificationCode);
       
-      //signed-in user
-      
     } catch (error) {
       console.log('error verifying account', error);
     }
@@ -40,27 +38,22 @@ const Verify = () => {
           {error && <p className="text-red-600 mb-5">{error}</p>}
           <form onSubmit={handleSubmit} className="flex flex-col space-y-3">
             <div>
-              <label htmlFor="username" className="block text-gray-700 font-bold mb-2">
-                Username
-              </label>
               <input
                 type="text"
                 id="username"
                 name="username"
                 value={username}
                 disabled
-                className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline cursor-not-allowed"
               />
             </div>
             <div>
-              <label htmlFor="verification-code" className="block text-gray-700 font-bold mb-2">
-                Verification Code
-              </label>
               <input
                 type="text"
                 id="verification-code"
                 name="code"
                 value={verificationCode}
+                placeholder='Enter verification code'
                 onChange={handleChange}
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
@@ -73,6 +66,7 @@ const Verify = () => {
                 Verify
               </button>
               <button
+                type='button'
                 onClick={handleResendConfirmationCode}
                 className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
               >

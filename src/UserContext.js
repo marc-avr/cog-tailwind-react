@@ -23,6 +23,11 @@ const UserContextProvider = ({ children }) => {
     } catch (error) {
       console.log('error signing in', error);
       setError(error.message);
+      if (error.message === 'User is not confirmed.'){
+        setAutoSignup({ username: username, password: password })
+        navigate(`/verify/${username}`);
+      }
+      
     }
   };
 
@@ -61,7 +66,7 @@ const UserContextProvider = ({ children }) => {
       setError(error.message);
     }
   };
-
+  
   const logout = async () => {
     try {
       await Auth.signOut();
