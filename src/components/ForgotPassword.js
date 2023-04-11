@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
     const [step, setStep] = useState(1);
     const [verificationCode, setVerificationCode] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -28,7 +29,11 @@ const ForgotPassword = () => {
         event.preventDefault();
         try {
             await Auth.forgotPasswordSubmit(email, verificationCode, new_password);
-            navigate('/');
+            setSuccessMessage("Password reset successfully.");
+            setTimeout(() => { 
+                navigate('/');
+            }, 2000);
+            
             console.log("password reset successfully.");
         } catch (error) {
             console.log("error occurred", error);
@@ -41,7 +46,8 @@ const ForgotPassword = () => {
             <div className="flex flex-col items-center mt-8">
                 {step === 1 && ( 
                     <div className="w-full max-w-md bg-white rounded-lg shadow-lg shadow-slate-900 p-8 mb-4">
-                        <h5 className="text-center text-2xl font-medium mb-5">Forgot Password</h5>
+                        <h5 className="text-center text-2xl font-medium mb-2">Forgot Password</h5>
+                        <h5 className="text-center text-md font-normal mb-3">Step 1 of 2</h5>
                         {errorMessage && 
                             <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
                                 {errorMessage}
@@ -78,10 +84,16 @@ const ForgotPassword = () => {
                 )}
                 {step === 2 && ( 
                     <div className="w-full max-w-md bg-white rounded-lg shadow-lg shadow-slate-900 p-8 mb-4">
-                        <h5 className="text-center text-2xl font-medium mb-5">Reset Password</h5>
+                        <h5 className="text-center text-2xl font-medium mb-2">Reset Password</h5>
+                        <h5 className="text-center text-md font-normal mb-3">Step 2 of 2</h5>
                         {errorMessage && 
-                            <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
+                            <div className="bg-green-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
                                 {errorMessage}
+                            </div>
+                        }
+                         {successMessage && 
+                            <div className="bg-red-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
+                                {successMessage}
                             </div>
                         }
                         <form 
