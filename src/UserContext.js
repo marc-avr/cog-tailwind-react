@@ -5,7 +5,20 @@ import { useNavigate } from 'react-router-dom';
 export const UserContext = createContext();
 
 const UserContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+
+  const getUser = () => {
+    const userString = localStorage.getItem('user');
+    console.log('userString', userString);
+    if (userString) {
+      const userInfo = JSON.parse(userString);
+      console.log('userInfo', userInfo);
+      return userInfo;
+    } else {
+      return null;
+    }
+  };
+  
+  const [user, setUser] = useState(getUser());
   const [error, setError] = useState(null);
   const [autoSignup, setAutoSignup] = useState(null);
   const navigate = useNavigate();
@@ -16,7 +29,12 @@ const UserContextProvider = ({ children }) => {
       const userInfo = {
         email: cognitoUser.attributes.email,
         username: cognitoUser.username,
+        given_name: cognitoUser.attributes.given_name,
+        family_name: cognitoUser.attributes.family_name,
+        phone_number: cognitoUser.attributes.phone_number,
       };
+      
+      localStorage.setItem('user', JSON.stringify(userInfo));
       setUser(userInfo);
       navigate('/dashboard');
       setError(null);
@@ -24,6 +42,7 @@ const UserContextProvider = ({ children }) => {
       console.log('error signing in', error);
       setError(error.message);
       if (error.message === 'User is not confirmed.'){
+
         setAutoSignup({ username: username, password: password })
         navigate(`/verify/${username}`);
       }
@@ -31,7 +50,7 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
-  const signUp = async (username, password, email) => {
+  const signUp = async (username, password, email, firstName, lastName, phoneNumber) => {
     let temp = username;
     try {
       await Auth.signUp({
@@ -39,6 +58,9 @@ const UserContextProvider = ({ children }) => {
         password,
         attributes: {
           email,
+          given_name: firstName,
+          family_name: lastName,
+          phone_number: phoneNumber
         },
       });
       setAutoSignup({ username: username, password: password })
@@ -70,6 +92,7 @@ const UserContextProvider = ({ children }) => {
   const logout = async () => {
     try {
       await Auth.signOut();
+      localStorage.removeItem('user'); 
       setUser(null);
     } catch (error) {
       console.log('error signing out', error);

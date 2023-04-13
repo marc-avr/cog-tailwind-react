@@ -21,6 +21,8 @@ const Dashboard = () => {
         <div>
           <p>Email: {user.email}</p>
           <p>Username: {user.username}</p>
+          <p>Name: {user.given_name} {user.family_name}</p>
+          <p>Phone Number: {user.phone_number}</p>
         </div>
       )}
       <Button variant="contained" onClick={handleLogout}>

@@ -19,7 +19,7 @@ const App = () => {
     setShowSignUp(!showSignUp);
   };
   const navigate = useNavigate();
-
+  
   return (
     <UserContextProvider>
       <div className="container mx-auto px-4">
@@ -61,8 +61,8 @@ const App = () => {
                 </p>
               </div>
             </div>
-          } 
-          />
+        } 
+        />
           <Route path="/verify/:username" element={<Verify />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
 
