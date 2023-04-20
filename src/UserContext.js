@@ -26,12 +26,15 @@ const UserContextProvider = ({ children }) => {
   const signIn = async (username, password) => {
     try {
       const cognitoUser = await Auth.signIn(username, password);
+      console.log('ATTRIBUTES: ',cognitoUser.attributes)
       const userInfo = {
         email: cognitoUser.attributes.email,
         username: cognitoUser.username,
         given_name: cognitoUser.attributes.given_name,
         family_name: cognitoUser.attributes.family_name,
         phone_number: cognitoUser.attributes.phone_number,
+        npi_number: cognitoUser.attributes['custom:npi_number'],
+        npi_data: JSON.parse(cognitoUser.attributes['custom:npi_data']),
       };
       
       localStorage.setItem('user', JSON.stringify(userInfo));
@@ -50,7 +53,7 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
-  const signUp = async (username, password, email, firstName, lastName, phoneNumber) => {
+  const signUp = async (username, password, email, firstName, lastName, phoneNumber, npi_number, npiObj_string) => {
     let temp = username;
     try {
       await Auth.signUp({
@@ -60,7 +63,9 @@ const UserContextProvider = ({ children }) => {
           email,
           given_name: firstName,
           family_name: lastName,
-          phone_number: phoneNumber
+          phone_number: phoneNumber,
+          'custom:npi_number': npi_number,
+          'custom:npi_data': npiObj_string,
         },
       });
       setAutoSignup({ username: username, password: password })

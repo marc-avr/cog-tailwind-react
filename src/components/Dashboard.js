@@ -23,6 +23,8 @@ const Dashboard = () => {
           <p>Username: {user.username}</p>
           <p>Name: {user.given_name} {user.family_name}</p>
           <p>Phone Number: {user.phone_number}</p>
+          <p>NPI Number: {user.npi_number}</p>
+          <p>NPI Data: {JSON.stringify(user.npi_data)}</p>
         </div>
       )}
       <Button variant="contained" onClick={handleLogout}>
