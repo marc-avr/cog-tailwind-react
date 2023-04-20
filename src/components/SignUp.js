@@ -36,7 +36,7 @@ const SignUp = () => {
 
     if(name === 'npi_number') { 
       set_npi_number(value);
-      if(value.length != 10) {
+      if(value.length !== 10) {
         setSuccessMsg('');
         setErrMsg('NPI must be 10 digits');
         setLookupDisabled(true);
