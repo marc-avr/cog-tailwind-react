@@ -22,13 +22,15 @@ const App = () => {
   
   return (
     <UserContextProvider>
-      <div className="container mx-auto px-4">
-        <header className="text-center py-6">
-          <h1 className="text-3xl font-bold">Cognito Authentication</h1>
-        </header>
+      
       
         <Routes>
+          
           <Route path="/" element={
+            <div className="container mx-auto px-4">
+            <header className="text-center py-6">
+              <h1 className="text-3xl font-bold">Cognito Authentication</h1>
+            </header>
             <div className="flex flex-col items-center mt-8">
               <div className="w-full max-w-md bg-white rounded-lg shadow-lg shadow-slate-900 p-8 mb-4" 
                 style={showSignUp ? { display: 'none' } : {}}
@@ -61,15 +63,18 @@ const App = () => {
                 </p>
               </div>
             </div>
+            </div>
         } 
         />
+        
           <Route path="/verify/:username" element={<Verify />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
 
           {/* Protected routes below, i.e. withAuth */}
           <Route path="/dashboard" element={<Dashboard />} />
+          
         </Routes>
-      </div>
+      
     </UserContextProvider>
   );
 };
